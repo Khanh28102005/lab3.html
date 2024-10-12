@@ -162,7 +162,7 @@
         </div>
         
         <div id="share" class="tab-content active">
-            <form action="/upload" method="post" enctype="multipart/form-data">
+            <form id="uploadForm">
                 <label for="subject">Nhập Tên Môn học:</label>
                 <input type="text" id="subject" name="subject" placeholder="VD: Toán, Vật lý..." required>
                 
@@ -222,6 +222,30 @@
     </div>
 
     <script>
+        document.getElementById("uploadForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Ngăn chặn hành vi gửi mặc định
+            
+            const formData = new FormData(this);
+
+            // Gửi dữ liệu tới server
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("Tải lên thành công!");
+                    document.getElementById("uploadForm").reset(); // Xóa form sau khi tải lên thành công
+                } else {
+                    alert("Có lỗi xảy ra trong quá trình tải lên.");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Có lỗi xảy ra trong quá trình tải lên.");
+            });
+        });
+
         function showTab(tabName) {
             const tabs = document.querySelectorAll('.tab-content');
             const buttons = document.querySelectorAll('.tab button');
