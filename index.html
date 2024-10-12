@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chia sẻ Tài liệu Học tập</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        .container:hover {
+            transform: translateY(-2px);
+        }
+        h1 {
+            color: #343a40;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+        .tab {
+            display: flex;
+            justify-content: space-around;
+            border-bottom: 2px solid #007bff;
+            margin-bottom: 20px;
+        }
+        .tab button {
+            background: none;
+            border: none;
+            padding: 15px 30px;
+            cursor: pointer;
+            font-size: 16px;
+            color: #007bff;
+            border-radius: 5px;
+            position: relative;
+            transition: color 0.3s;
+        }
+        .tab button.active {
+            color: #0056b3;
+            font-weight: bold;
+        }
+        .tab-content {
+            display: none;
+        }
+        .active {
+            display: block;
+        }
+        form {
+            margin-top: 20px;
+        }
+        input, select {
+            width: 100%;
+            margin: 10px 0;
+            padding: 12px;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            transition: border 0.3s, box-shadow 0.3s;
+        }
+        input:focus, select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            outline: none;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: 500;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        h2 {
+            color: #343a40;
+            margin-top: 30px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+        .material-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .material-item {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            background: #e9ecef;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        .material-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+        }
+        .material-item i {
+            font-size: 50px;
+            color: #007bff;
+        }
+        .material-name {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #343a40;
+        }
+        .lesson-view {
+            margin-top: 20px;
+            border: 1px solid #ced4da;
+            padding: 20px;
+            border-radius: 10px;
+            background: #f8f9fa;
+        }
+        .lesson-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #343a40;
+        }
+        .lesson-content {
+            font-size: 1rem;
+            color: #495057;
+            line-height: 1.6;
+        }
+        .back-button {
+            margin: 20px 0;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Chia sẻ Tài liệu Học tập</h1>
+        
+        <div class="tab">
+            <button class="active" onclick="showTab('share')">Chia sẻ Tài liệu</button>
+            <button onclick="showTab('available')">Tài liệu Có sẵn</button>
+        </div>
+        
+        <div id="share" class="tab-content active">
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <label for="subject">Nhập Tên Môn học:</label>
+                <input type="text" id="subject" name="subject" placeholder="VD: Toán, Vật lý..." required>
+                
+                <label for="type">Chọn Loại tài liệu:</label>
+                <select id="type" name="type" required>
+                    <option value="">-- Chọn loại tài liệu --</option>
+                    <option value="bai-giang">Bài giảng</option>
+                    <option value="bai-tap">Bài tập</option>
+                    <option value="tai-lieu-tham-khao">Tài liệu tham khảo</option>
+                </select>
+                
+                <label for="document">Chọn Tài liệu:</label>
+                <input type="file" id="document" name="document" required>
+                
+                <input type="submit" value="Tải lên">
+            </form>
+        </div>
+        
+        <div id="available" class="tab-content">
+            <h2>Tài liệu có sẵn:</h2>
+            <div class="material-list">
+                <div class="material-item" onclick="showLesson('Toán - Bài giảng về Đại số', 'Nội dung bài giảng về Đại số, bao gồm các định nghĩa cơ bản, công thức và bài tập mẫu.')">
+                    <i class="fas fa-book"></i>
+                    <div class="material-name">Toán - Bài giảng về Đại số</div>
+                </div>
+                <div class="material-item" onclick="showLesson('Vật lý - Bài tập về Động lực học', 'Nội dung bài tập về Động lực học, bao gồm các định luật và ví dụ minh họa.')">
+                    <i class="fas fa-book"></i>
+                    <div class="material-name">Vật lý - Bài tập về Động lực học</div>
+                </div>
+                <div class="material-item" onclick="showLesson('Hóa học - Tài liệu tham khảo về Hóa hữu cơ', 'Nội dung tài liệu tham khảo về Hóa hữu cơ, bao gồm các khái niệm và phương pháp nghiên cứu.')">
+                    <i class="fas fa-book"></i>
+                    <div class="material-name">Hóa học - Tài liệu tham khảo về Hóa hữu cơ</div>
+                </div>
+                <div class="material-item" onclick="showLesson('Văn học - Phân tích tác phẩm', 'Nội dung phân tích tác phẩm văn học nổi bật, bao gồm ý nghĩa và thông điệp của tác phẩm.')">
+                    <i class="fas fa-book"></i>
+                    <div class="material-name">Văn học - Phân tích tác phẩm</div>
+                </div>
+                <div class="material-item" onclick="showLesson('Sinh học - Bài giảng về Di truyền', 'Nội dung bài giảng về Di truyền, bao gồm các khái niệm cơ bản và ứng dụng trong thực tế.')">
+                    <i class="fas fa-book"></i>
+                    <div class="material-name">Sinh học - Bài giảng về Di truyền</div>
+                </div>
+                <div class="material-item" onclick="showLesson('Tin học - Bài tập về Lập trình', 'Nội dung bài tập về Lập trình, bao gồm các bài tập thực hành và lý thuyết.')">
+                    <i class="fas fa-book"></i>
+                    <div class="material-name">Tin học - Bài tập về Lập trình</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="lesson-view" class="tab-content">
+            <h2>Chi tiết Bài học</h2>
+            <button class="back-button" onclick="backToAvailable()">Quay lại</button>
+            <div class="lesson-view">
+                <div class="lesson-title" id="lesson-title">Tiêu đề Bài học</div>
+                <div class="lesson-content" id="lesson-content">Nội dung Bài học</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            const tabs = document.querySelectorAll('.tab-content');
+            const buttons = document.querySelectorAll('.tab button');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+            document.getElementById(tabName).classList.add('active');
+            buttons.forEach(button => {
+                if (button.textContent.includes(tabName === 'share' ? 'Chia sẻ Tài liệu' : 'Tài liệu Có sẵn')) {
+                    button.classList.add('active');
+                }
+            });
+        }
+
+        function showLesson(title, content) {
+            document.getElementById('lesson-title').innerText = title;
+            document.getElementById('lesson-content').innerText = content;
+            showTab('lesson-view');
+        }
+
+        function backToAvailable() {
+            showTab('available');
+        }
+    </script>
+</body>
+</html>
